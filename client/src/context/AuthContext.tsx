@@ -88,8 +88,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const response = await api.post('/auth/register', { 
         email, 
         password, 
-        full_name: username, 
-        role: 'USER' 
+        full_name: username
       });
       const authData = response.data.data;
       const { access_token, refresh_token, user: userData } = authData;

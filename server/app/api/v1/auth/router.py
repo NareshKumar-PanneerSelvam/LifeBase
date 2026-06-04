@@ -1,13 +1,58 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db_session
-from app.schemas.auth import LoginRequest, RefreshRequest, TokenResponse, AuthResponse
-from app.schemas.user import UserCreate, UserResponse
+from app.core.config import settings
+from app.core.exceptions import ForbiddenException, BadRequestException
+from app.schemas.auth import LoginRequest, RefreshRequest, TokenResponse, AuthResponse, PromoteAdminRequest
+from app.schemas.user import UserCreate, UserResponse, UserUpdate
 from app.schemas.response import APIResponse
 from app.services.auth import auth_service
 from app.services.user import user_service
 
 router = APIRouter()
+
+@router.post(
+    "/promote-admin",
+    response_model=APIResponse[UserResponse],
+    status_code=status.HTTP_200_OK,
+)
+async def promote_admin(
+    promote_in: PromoteAdminRequest, db: AsyncSession = Depends(get_db_session)
+) -> APIResponse[UserResponse]:
+    """Promotes an existing user to ADMIN, or creates a new one as ADMIN.
+    Guarded by settings.ADMIN_SECRET_KEY.
+    """
+    if promote_in.secret_key != settings.ADMIN_SECRET_KEY:
+        raise ForbiddenException("Invalid administrative secret key.")
+        
+    user = await user_service.get_user_by_email(db, email=promote_in.email)
+    if user:
+        updated_user = await user_service.update_user(
+            db, user_id=user.id, user_in=UserUpdate(role="ADMIN")
+        )
+        await db.commit()
+        await db.refresh(updated_user)
+        return APIResponse(success=True, data=UserResponse.model_validate(updated_user))
+    
+    if not promote_in.password or not promote_in.full_name:
+        raise BadRequestException(
+            "User does not exist. To create a new admin user, password and full_name are required."
+        )
+        
+    new_user = await user_service.create_user(
+        db,
+        user_in=UserCreate(
+            email=promote_in.email,
+            password=promote_in.password,
+            full_name=promote_in.full_name,
+        ),
+    )
+    updated_user = await user_service.update_user(
+        db, user_id=new_user.id, user_in=UserUpdate(role="ADMIN")
+    )
+    await db.commit()
+    await db.refresh(updated_user)
+    return APIResponse(success=True, data=UserResponse.model_validate(updated_user))
 
 @router.post(
     "/register",

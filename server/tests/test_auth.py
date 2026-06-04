@@ -26,7 +26,6 @@ async def test_complete_auth_flow(client: AsyncClient, db: AsyncSession) -> None
         "email": "test@example.com",
         "password": "securepassword123",
         "full_name": "Test User",
-        "role": "USER",
     }
     response = await client.post("/api/v1/auth/register", json=register_payload)
     assert response.status_code == 201
@@ -144,3 +143,56 @@ async def test_admin_role_authorization(client: AsyncClient, db: AsyncSession) -
     assert res_data["success"] is True
     assert "bypassed" in res_data["data"]["message"]
     assert res_data["data"]["role"] == "ADMIN"
+
+@pytest.mark.asyncio
+async def test_promote_admin_flow(client: AsyncClient, db: AsyncSession) -> None:
+    """Verifies promoting a user to ADMIN works and creating a new user as ADMIN via endpoint works."""
+    # 1. Test promote existing user with correct key
+    # First register user normally (no role, will default to USER)
+    payload = {
+        "email": "promote_me@example.com",
+        "password": "normalpassword123",
+        "full_name": "Promote Me",
+    }
+    response = await client.post("/api/v1/auth/register", json=payload)
+    assert response.status_code == 201
+    
+    # Try promoting with incorrect key (should fail with 403 Forbidden)
+    promote_payload = {
+        "email": "promote_me@example.com",
+        "secret_key": "wrongkey",
+    }
+    response = await client.post("/api/v1/auth/promote-admin", json=promote_payload)
+    assert response.status_code == 403
+    
+    # Promote with correct key
+    promote_payload["secret_key"] = "dev-admin-secret-key"
+    response = await client.post("/api/v1/auth/promote-admin", json=promote_payload)
+    assert response.status_code == 200
+    res_data = response.json()
+    assert res_data["success"] is True
+    assert res_data["data"]["role"] == "ADMIN"
+    assert res_data["data"]["email"] == "promote_me@example.com"
+    
+    # 2. Test create new user as ADMIN via promote-admin endpoint
+    new_admin_payload = {
+        "email": "brand_new_admin@example.com",
+        "secret_key": "dev-admin-secret-key",
+        "password": "adminsecurepassword123",
+        "full_name": "Brand New Admin",
+    }
+    response = await client.post("/api/v1/auth/promote-admin", json=new_admin_payload)
+    assert response.status_code == 200
+    res_data = response.json()
+    assert res_data["success"] is True
+    assert res_data["data"]["role"] == "ADMIN"
+    assert res_data["data"]["email"] == "brand_new_admin@example.com"
+    
+    # 3. Try to create new user without password/fullname (should fail with 400 Bad Request)
+    incomplete_payload = {
+        "email": "missing_admin@example.com",
+        "secret_key": "dev-admin-secret-key",
+    }
+    response = await client.post("/api/v1/auth/promote-admin", json=incomplete_payload)
+    assert response.status_code == 400
+

@@ -7,7 +7,6 @@ class UserBase(BaseModel):
     """Base schemas containing common fields for User data transfers."""
     email: EmailStr
     full_name: str
-    role: str = "USER"
 
 class UserCreate(UserBase):
     """Schema for registering a new user. Enforces strict password validation."""
@@ -26,6 +25,7 @@ class UserResponse(UserBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: uuid.UUID
+    role: str
     is_active: bool
     created_at: datetime
     updated_at: datetime
