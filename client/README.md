@@ -42,7 +42,7 @@ npm install
 ### Step 2: Set Server Base URL
 If your backend runs on a different port or host, update the `API_BASE_URL` in [`src/services/api.ts`](file:///d:/LifeBase/client/src/services/api.ts#L4):
 ```typescript
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'http://localhost:8000/api/v1';
 ```
 
 ### Step 3: Run Development Server

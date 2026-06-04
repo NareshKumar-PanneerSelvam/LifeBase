@@ -23,7 +23,7 @@ A production-grade, high-performance async-first backend for **LifeBase** writte
 The backend implements a **Modular Monolith** matching a highly scalable **Repository-Service Pattern**:
 
 ```
-lifebase-server/
+server/
 │
 ├── alembic/                # Database migration schemas
 │   ├── versions/           # Migration revisions
@@ -96,7 +96,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 1.  **Clone / Open Project**
     Navigate to the project root:
     ```bash
-    cd d:\LifeBase\lifebase-server
+    cd d:\LifeBase\server
     ```
 
 2.  **Create Virtual Environment**

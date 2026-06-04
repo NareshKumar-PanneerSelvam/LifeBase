@@ -1,6 +1,6 @@
 # LifeBase Backend Developer Setup & Operations Guide
 
-This document details the configuration paths for database connection strings and provides a comprehensive guide for developers setting up, running, migrating, and testing the `lifebase-server` FastAPI backend.
+This document details the configuration paths for database connection strings and provides a comprehensive guide for developers setting up, running, migrating, and testing the `server` FastAPI backend.
 
 ---
 
@@ -9,7 +9,7 @@ This document details the configuration paths for database connection strings an
 The PostgreSQL connection string is configured dynamically using an environment-based configuration system. Here is exactly where and how it is defined:
 
 ### 1. The Environment Files
-*   **Location**: `lifebase-server/.env` (and `lifebase-server/.env.example`)
+*   **Location**: `server/.env` (and `server/.env.example`)
 *   **Key**: `DATABASE_URL`
 *   **Standard Local Format**: 
     ```ini
@@ -18,7 +18,7 @@ The PostgreSQL connection string is configured dynamically using an environment-
     *(Note: Using standard `postgresql://` is compatible with other tools, and our code handles driver conversion automatically).*
 
 ### 2. Configuration Loader
-*   **File**: [`app/core/config.py`](file:///d:/LifeBase/lifebase-server/app/core/config.py)
+*   **File**: [`app/core/config.py`](file:///d:/LifeBase/server/app/core/config.py)
 *   **Role**: Uses `pydantic-settings` to load settings from the `.env` file into a type-safe Python settings model:
     ```python
     class Settings(BaseSettings):
@@ -26,7 +26,7 @@ The PostgreSQL connection string is configured dynamically using an environment-
     ```
 
 ### 3. Async Engine Initialization (Auto-Swapping Driver)
-*   **File**: [`app/core/database.py`](file:///d:/LifeBase/lifebase-server/app/core/database.py)
+*   **File**: [`app/core/database.py`](file:///d:/LifeBase/server/app/core/database.py)
 *   **Role**: Automatically intercepts the database URL and swaps the protocol prefix to `postgresql+asyncpg://` if it was loaded as a standard synchronous connection. This lets us use standard postgres connection formats while strictly executing async-first operations in SQLAlchemy:
     ```python
     db_url = settings.DATABASE_URL
@@ -37,7 +37,7 @@ The PostgreSQL connection string is configured dynamically using an environment-
     ```
 
 ### 4. Containerized Environment (Docker Compose)
-*   **File**: [`docker-compose.yml`](file:///d:/LifeBase/lifebase-server/docker-compose.yml)
+*   **File**: [`docker-compose.yml`](file:///d:/LifeBase/server/docker-compose.yml)
 *   **Role**: Overrides the connection string for the `web` container. It routes database queries to the `db` container service within the Docker internal network:
     ```yaml
     environment:
@@ -45,7 +45,7 @@ The PostgreSQL connection string is configured dynamically using an environment-
     ```
 
 ### 5. Database Migrations Loader
-*   **File**: [`alembic/env.py`](file:///d:/LifeBase/lifebase-server/alembic/env.py)
+*   **File**: [`alembic/env.py`](file:///d:/LifeBase/server/alembic/env.py)
 *   **Role**: Loads `settings.DATABASE_URL`, converts it to the async driver format, and passes it directly to the Alembic connection pool so that database migrations run on the same environment targets:
     ```python
     config.set_main_option("sqlalchemy.url", db_url)
@@ -60,7 +60,7 @@ We recommend utilizing the **`uv`** package manager for fast virtual environment
 ### Step 1: Initialize the Environment
 Navigate to the server directory and create a Python 3.12 virtual environment:
 ```bash
-cd d:\LifeBase\lifebase-server
+cd d:\LifeBase\server
 uv venv --python 3.12
 ```
 
