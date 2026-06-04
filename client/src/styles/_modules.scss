@@ -1,0 +1,354 @@
+@import 'variables';
+
+/* Module Header Styles */
+.dashboard-header-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+
+  &.compact {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.module-header-title {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.module-header-subtitle {
+  color: $color-text-secondary;
+}
+
+/* Stats Overview Grid */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-info {
+  h4 {
+    font-size: 0.875rem;
+    color: $color-text-secondary;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.875rem;
+    font-family: $font-heading;
+    font-weight: 700;
+  }
+
+  .stat-badge-row {
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .stat-role-text {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    font-family: monospace;
+  }
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-primary-glow;
+  color: $color-primary;
+
+  &.accent {
+    background: $color-accent-glow;
+    color: $color-accent;
+  }
+}
+
+/* Overview Split Layouts */
+.details-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-table-card {
+  padding: 2rem;
+
+  &.narrow {
+    max-width: 600px;
+  }
+}
+
+.detail-card-title {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .title-icon {
+    color: $color-primary;
+  }
+}
+
+.detail-card-desc {
+  color: $color-text-secondary;
+  line-height: 1.6;
+  font-size: 0.95rem;
+
+  p {
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Auth Parameters & Claims Lists */
+.auth-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.auth-info-label {
+  font-size: 0.75rem;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.auth-info-val {
+  font-size: 0.95rem;
+  color: $color-text-primary;
+  font-weight: 500;
+
+  &.monospace {
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+}
+
+/* API Security Console Styles */
+.console-row-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.console-title-block {
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  p {
+    color: $color-text-secondary;
+    font-size: 0.875rem;
+  }
+}
+
+.console-terminal-pane {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  padding: 1.5rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  min-height: 180px;
+}
+
+.console-loading-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  color: $color-text-muted;
+
+  .loading-icon {
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.console-ready-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  color: $color-text-muted;
+}
+
+.console-response-text {
+  &.success {
+    color: $color-accent;
+  }
+
+  &.danger {
+    color: $color-danger;
+  }
+}
+
+/* Profile Module Styles */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 1.5rem;
+}
+
+.profile-avatar-large {
+  width: 64px;
+  height: 64px;
+  font-size: 1.75rem;
+}
+
+.profile-title-block {
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+  }
+}
+
+.profile-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile-info-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding-bottom: 0.75rem;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.profile-info-label {
+  font-weight: 600;
+  color: $color-text-secondary;
+}
+
+.profile-info-val-mono {
+  font-family: 'monospace';
+}
+
+.profile-roles-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.profile-roles-badge {
+  font-size: 0.75rem;
+}
+
+/* Pluggable Module Placeholders (Dynamic Module System) */
+.placeholder-card {
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-style: dashed;
+  border-width: 2px;
+
+  &:hover {
+    border-color: $color-primary;
+  }
+}
+
+.placeholder-icon-container {
+  width: 80px;
+  height: 80px;
+  border-radius: $radius-full;
+  background: rgba(99, 102, 241, 0.07);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-primary;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 20px 0 rgba(99, 102, 241, 0.05);
+  transition: $transition-normal;
+
+  .placeholder-card:hover & {
+    transform: scale(1.05) rotate(5deg);
+    background: rgba(99, 102, 241, 0.12);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: $color-text-primary;
+    box-shadow: 0 0 30px 0 $color-primary-glow;
+  }
+}
+
+.placeholder-title {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, $color-text-primary, $color-text-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.placeholder-desc {
+  max-width: 500px;
+  color: $color-text-secondary;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.placeholder-badge {
+  font-family: monospace;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+  color: $color-text-muted;
+}

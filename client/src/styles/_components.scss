@@ -1,0 +1,264 @@
+@import 'variables';
+
+/* Glassmorphism Card */
+.glass-card {
+  background: $bg-glass;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  transition: $transition-normal;
+
+  &:hover {
+    border-color: $border-glow;
+    box-shadow: $shadow-glow;
+  }
+}
+
+/* Custom Interactive Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-family: $font-heading;
+  font-weight: 500;
+  border-radius: $radius-md;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: $transition-normal;
+  font-size: 0.95rem;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: $color-primary;
+  color: #ffffff;
+  box-shadow: 0 4px 14px 0 $color-primary-glow;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+    box-shadow: 0 6px 20px 0 $color-primary-glow;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: $color-text-primary;
+  border-color: $border-color;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: $color-text-secondary;
+  }
+}
+
+/* Form Controls & Inputs */
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $color-text-secondary;
+  font-family: $font-heading;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  color: $color-text-primary;
+  font-family: $font-body;
+  font-size: 0.95rem;
+  transition: $transition-normal;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px $color-primary-glow;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* Absolute Input Wrapper Utilities (Replaces Inline Styles) */
+.auth-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $color-text-muted;
+  display: flex;
+  pointer-events: none;
+}
+
+.auth-input-field {
+  padding-left: 2.5rem;
+
+  &.has-toggle {
+    padding-right: 2.5rem;
+  }
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: $color-text-muted;
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+  transition: $transition-fast;
+
+  &:hover {
+    color: $color-text-secondary;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.auth-submit-btn {
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.auth-footer-text {
+  margin-top: 1.75rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: $color-text-secondary;
+}
+
+.auth-footer-link {
+  font-weight: 600;
+  transition: $transition-fast;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: $radius-full;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &.w-full {
+    width: 100%;
+  }
+
+  &.centered {
+    justify-content: center;
+  }
+}
+
+.badge-success {
+  background: $color-accent-glow;
+  color: $color-accent;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-danger {
+  background: $color-danger-glow;
+  color: $color-danger;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Toast Container & Alert Popups */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: $radius-md;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: $shadow-lg;
+  animation: slideUp $transition-fast forwards;
+}
+
+.toast-success {
+  background: #065f46;
+  border: 1px solid $color-accent;
+}
+
+.toast-error {
+  background: #991b1b;
+  border: 1px solid $color-danger;
+}
+
+/* Central Loader Spinner Container */
+.loader-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  color: var(--color-text-secondary);
+  gap: 1rem;
+
+  .loader-spinner {
+    color: var(--color-primary);
+  }
+
+  .loader-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: var(--font-heading);
+  }
+}

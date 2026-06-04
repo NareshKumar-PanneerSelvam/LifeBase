@@ -1,0 +1,200 @@
+@import 'variables';
+
+/* Auth Wrapper Layouts */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-logo {
+  font-size: 2.25rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, $color-primary, $color-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.auth-subtitle {
+  color: $color-text-secondary;
+  font-size: 0.95rem;
+}
+
+/* Dashboard Layout */
+.dashboard-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  height: 70px;
+  border-bottom: 1px solid $border-color;
+  background: rgba(9, 13, 22, 0.8);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, $color-primary, $color-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-logo-icon {
+  color: $color-primary;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-logout-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.user-profile-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: $radius-full;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border-color;
+  font-family: $font-heading;
+  font-size: 0.9rem;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-full;
+  background: linear-gradient(135deg, $color-primary, $color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 260px;
+  border-right: 1px solid $border-color;
+  background: rgba(17, 24, 39, 0.3);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1rem;
+  color: $color-text-secondary;
+  border-radius: $radius-md;
+  font-weight: 500;
+  transition: $transition-fast;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover, &.active {
+    color: $color-text-primary;
+    background: rgba(99, 102, 241, 0.1);
+    border-left: 3px solid $color-primary;
+    padding-left: calc(1rem - 3px);
+  }
+
+  &.active {
+    background: rgba(99, 102, 241, 0.12);
+    border-left: 3px solid $color-primary;
+  }
+}
+
+.sidebar-status-box {
+  padding: 0.75rem;
+  border-radius: $radius-md;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border-color;
+  font-size: 0.75rem;
+  color: $color-text-muted;
+}
+
+.sidebar-status-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.sidebar-status-label {
+  font-weight: 400;
+}
+
+.sidebar-status-val-host {
+  color: $color-text-secondary;
+  font-weight: 600;
+}
+
+.sidebar-status-badge {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+}
+
+/* Scrollable Main Viewport */
+.dashboard-content {
+  flex: 1;
+  padding: 2.5rem;
+  overflow-y: auto;
+  background-color: transparent;
+}
