@@ -11,6 +11,9 @@ const Dashboard: React.FC = () => {
   const location = useLocation();
   const [serverStatus, setServerStatus] = useState<'online' | 'offline' | 'checking'>('checking');
 
+  const apiBase = api.defaults.baseURL || '';
+  const apiHost = apiBase.startsWith('http') ? new URL(apiBase).host : window.location.host;
+
   // Verify server status on mount
   useEffect(() => {
     const checkServer = async () => {
@@ -119,7 +122,7 @@ const Dashboard: React.FC = () => {
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-1.5 text-slate-450">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-              <span>Host: localhost:8000</span>
+              <span>Host: {apiHost}</span>
             </div>
             
             <div className="flex items-center gap-1.5 text-slate-450">
